@@ -28,7 +28,8 @@ fun getISOCountries(): List<String> {
 fun getCountryCode(countryName: String) =
     Locale.getISOCountries().find { Locale("", it).displayCountry == countryName }
 
-fun getCurrency(countryCode: String): String {
+fun getCurrency(countryName: String): String {
+    val countryCode = getCountryCode(countryName)
     val locales = Locale.getAvailableLocales()
     for (i in locales.indices) {
         if (locales[i].country == countryCode) return Currency.getInstance(locales[i]).currencyCode

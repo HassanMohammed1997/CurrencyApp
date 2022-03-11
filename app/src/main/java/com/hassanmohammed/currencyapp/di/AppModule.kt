@@ -3,6 +3,8 @@ package com.hassanmohammed.currencyapp.di
 import com.hassanmohammed.currencyapp.data.MainRepository
 import com.hassanmohammed.currencyapp.data.MainRepositoryImpl
 import com.hassanmohammed.currencyapp.data.remote.CurrencyService
+import com.hassanmohammed.currencyapp.domain.interactors.currencyconverter.ConvertCurrencyInteractor
+import com.hassanmohammed.currencyapp.domain.interactors.currencyconverter.ConvertCurrencyInteractorImpl
 import com.hassanmohammed.currencyapp.domain.interactors.historical.GetHistoricalRatesInteractorImpl
 import com.hassanmohammed.currencyapp.domain.interactors.historical.GetHistoricalRatesIntercator
 import dagger.Module
@@ -24,5 +26,11 @@ object AppModule {
     @Provides
     fun provideHistoricalRatesIntercator(repository: MainRepository) : GetHistoricalRatesIntercator{
         return GetHistoricalRatesInteractorImpl(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCurrencyConverterInteractor(repository: MainRepository) : ConvertCurrencyInteractor{
+        return ConvertCurrencyInteractorImpl(repository)
     }
 }

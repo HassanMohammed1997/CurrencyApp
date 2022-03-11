@@ -16,6 +16,8 @@ android {
         versionName "1.0"
         buildConfigField "String", "FIXER_API_KEY", FIXER_API_KEY
         buildConfigField "String", "FIXER_BASE_URL", FIXER_BASE_URL
+        buildConfigField "String", "CONVERTER_API_URL", CONVERTER_URL
+        buildConfigField "String", "CONVERTER_API_KEY", CURRENCY_CONVERTER_API_KEY
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

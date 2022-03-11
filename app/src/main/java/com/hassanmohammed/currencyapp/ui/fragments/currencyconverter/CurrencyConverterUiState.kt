@@ -1,7 +1,9 @@
 package com.hassanmohammed.currencyapp.ui.fragments.currencyconverter
 
+import com.hassanmohammed.currencyapp.domain.models.CurrencyConverter
+
 data class CurrencyConverterUiState(
-    private var dashboard: Unit? = null,
-    private var isLoading: Boolean = false
+    var data: CurrencyConverter? = null,
+    var isLoading: Boolean = false
 ) {
 }

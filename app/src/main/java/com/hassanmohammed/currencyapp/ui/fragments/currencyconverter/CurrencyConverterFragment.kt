@@ -7,24 +7,28 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.hassanmohammed.currencyapp.R
 import com.hassanmohammed.currencyapp.databinding.FragmentCurrencyConverterBinding
-import com.hassanmohammed.currencyapp.ui.fragments.historical.HistoricalRateViewModel
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.atIndex
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.setItems
 import com.hassanmohammed.currencyapp.utils.fragmentViewBinding
 import com.hassanmohammed.currencyapp.utils.getCountries
+import com.hassanmohammed.currencyapp.utils.getCurrency
+import com.hassanmohammed.currencyapp.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter) {
     private val binding by fragmentViewBinding(FragmentCurrencyConverterBinding::bind)
-    private val viewModel by viewModels<HistoricalRateViewModel>()
+    private val viewModel by viewModels<CurrencyConvertViewModel>()
     private var baseCurrency: String = ""
     private var otherCurrency: String = ""
     private var baseCurrencyIdx: Int = 0
     private var otherCurrencyIdx: Int = 0
+    private var amount: String = "1"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.currencyViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         setCountriesInSpinners()
         setListenerForViews()
     }
@@ -39,14 +43,23 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
         }
 
         binding.baseSelector.doAfterTextChanged {
-            baseCurrency = it.toString()
+            baseCurrency = getCurrency(it.toString())
         }
 
         binding.otherCurrencySelector.doAfterTextChanged {
-            otherCurrency = it.toString()
+            otherCurrency = getCurrency(it.toString())
+        }
+
+        binding.amountEt.doAfterTextChanged {
+            amount = it.toString()
         }
 
         binding.swapBtn.setOnClickListener { swapSpinnersValues() }
+
+        binding.convertBtn.setOnClickListener {
+            hideKeyboard()
+            viewModel.convert(baseCurrency, otherCurrency, amount)
+        }
     }
 
     private fun setCountriesInSpinners() {
