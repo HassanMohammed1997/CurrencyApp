@@ -11,5 +11,5 @@ data class HistoricalRateDto(
     val base: String = "",
     val rates: Map<String, Float> = emptyMap()
 ) {
-    fun toHistoricalRate() = HistoricalRate(date, rates)
+    fun toHistoricalRate() = HistoricalRate(date, base, rates)
 }
