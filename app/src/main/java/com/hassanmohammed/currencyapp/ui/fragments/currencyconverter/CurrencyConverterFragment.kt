@@ -25,12 +25,18 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.currencyViewModel = viewModel
-        binding.lifecycleOwner = this
+        passValuesToDataBinding()
         setCountriesInSpinners()
         setListenerForViews()
         subscribeObserver()
 
+    }
+
+    private fun passValuesToDataBinding() {
+        binding.run {
+            currencyViewModel = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
     }
 
     private fun subscribeObserver() {

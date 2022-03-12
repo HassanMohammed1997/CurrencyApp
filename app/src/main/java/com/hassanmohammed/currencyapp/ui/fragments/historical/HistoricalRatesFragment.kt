@@ -2,6 +2,7 @@ package com.hassanmohammed.currencyapp.ui.fragments.historical
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -29,11 +30,19 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fromCurrency = args.fromCurrency
-        binding.toCurrency = args.toCurrency
+        passValuesToDataBinding()
         getHistoricalRates()
         setupHistoricalRatesRecycler()
         subscribeObservers()
+    }
+
+    private fun passValuesToDataBinding() {
+        binding.run {
+            fromCurrency = args.fromCurrency
+            toCurrency = args.toCurrency
+            viewModel = this.viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
     }
 
     private fun subscribeObservers() {
@@ -43,6 +52,8 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
                     if (it.isNotEmpty()) {
                         historicalRateRecyclerAdapter.submitList(it)
                         showSnackbar(it.first().errorMessage)
+                    } else {
+                        binding.historicalRatesList.isVisible = false
                     }
                 }
             }
@@ -72,7 +83,6 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
 
     private fun getHistoricalRates() {
         viewModel.getHistoricalRates(args.fromCurrency, args.toCurrency)
-
     }
 
 }
