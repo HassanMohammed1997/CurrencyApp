@@ -8,11 +8,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hassanmohammed.currencyapp.R
 import com.hassanmohammed.currencyapp.databinding.FragmentCurrencyConverterBinding
-import com.hassanmohammed.currencyapp.utils.*
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.atIndex
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.setItems
+import com.hassanmohammed.currencyapp.utils.fragmentViewBinding
+import com.hassanmohammed.currencyapp.utils.getCountries
+import com.hassanmohammed.currencyapp.utils.getCurrency
+import com.hassanmohammed.currencyapp.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter) {
@@ -89,5 +91,15 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
                 toCurrencyCode
             )
         findNavController().navigate(action)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        clearSpinnersValues()
+    }
+
+    private fun clearSpinnersValues() {
+        binding.otherCurrencySelector.setText("", false)
+        binding.baseSelector.setText("", false)
     }
 }

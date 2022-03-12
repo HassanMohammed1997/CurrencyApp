@@ -14,7 +14,7 @@ object BindingAdapterUtil {
     fun AutoCompleteTextView.setItems(items: List<Any>?) {
         items?.let {
             val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, it)
-            setAdapter(adapter)
+            this.setAdapter(adapter)
         }
     }
 

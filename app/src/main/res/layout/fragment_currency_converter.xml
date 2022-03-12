@@ -37,6 +37,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/base_selector"
+                    android:freezesText="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -76,6 +77,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:inputType="none"
+                    android:freezesText="false"
                     app:setDefaultIndex="@{0}" />
             </com.google.android.material.textfield.TextInputLayout>
 
