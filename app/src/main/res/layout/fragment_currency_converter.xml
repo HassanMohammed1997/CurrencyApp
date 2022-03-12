@@ -9,7 +9,7 @@
 
         <variable
             name="currencyViewModel"
-            type="com.hassanmohammed.currencyapp.ui.fragments.currencyconverter.CurrencyConvertViewModel" />
+            type="com.hassanmohammed.currencyapp.ui.viewmodel.currency.CurrencyConvertViewModel" />
     </data>
 
     <ScrollView

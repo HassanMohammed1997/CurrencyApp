@@ -1,4 +1,4 @@
-package com.hassanmohammed.currencyapp.ui.fragments.historical
+package com.hassanmohammed.currencyapp.ui.viewmodel.historical
 
 import com.hassanmohammed.currencyapp.domain.models.HistoricalRate
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import com.hassanmohammed.currencyapp.R
 import com.hassanmohammed.currencyapp.databinding.FragmentHistoricalRatesBinding
 import com.hassanmohammed.currencyapp.ui.adapters.HistoricalRateRecyclerAdapter
+import com.hassanmohammed.currencyapp.ui.viewmodel.historical.HistoricalRateViewModel
 import com.hassanmohammed.currencyapp.utils.UiEvent
 import com.hassanmohammed.currencyapp.utils.fragmentViewBinding
 import com.hassanmohammed.currencyapp.utils.showSnackbar

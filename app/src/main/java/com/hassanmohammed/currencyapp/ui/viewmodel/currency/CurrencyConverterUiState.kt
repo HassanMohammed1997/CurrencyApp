@@ -1,4 +1,4 @@
-package com.hassanmohammed.currencyapp.ui.fragments.currencyconverter
+package com.hassanmohammed.currencyapp.ui.viewmodel.currency
 
 import com.hassanmohammed.currencyapp.domain.models.CurrencyConverter
 

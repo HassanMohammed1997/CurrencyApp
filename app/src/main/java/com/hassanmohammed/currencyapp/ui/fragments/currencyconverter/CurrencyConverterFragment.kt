@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hassanmohammed.currencyapp.R
 import com.hassanmohammed.currencyapp.databinding.FragmentCurrencyConverterBinding
+import com.hassanmohammed.currencyapp.ui.viewmodel.currency.CurrencyConvertViewModel
 import com.hassanmohammed.currencyapp.utils.*
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.atIndex
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.setItems
