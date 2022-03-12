@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/currencyConverterFragment"
         android:name="com.hassanmohammed.currencyapp.ui.fragments.currencyconverter.CurrencyConverterFragment"
-        android:label="CurrencyConverterFragment" >
+        android:label="@string/currency_converter_screen">
         <action
             android:id="@+id/action_currencyConverterFragment_to_historicalRatesFragment"
             app:destination="@id/historicalRatesFragment" />
@@ -15,5 +15,12 @@
     <fragment
         android:id="@+id/historicalRatesFragment"
         android:name="com.hassanmohammed.currencyapp.ui.fragments.historical.HistoricalRatesFragment"
-        android:label="HistoricalRatesFragment" />
+        android:label="@string/historical_rates_screen">
+        <argument
+            android:name="fromCurrency"
+            app:argType="string" />
+        <argument
+            android:name="toCurrency"
+            app:argType="string" />
+    </fragment>
 </navigation>

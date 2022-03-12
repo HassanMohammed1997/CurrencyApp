@@ -3,6 +3,7 @@ package com.hassanmohammed.currencyapp.utils
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 
 object BindingAdapterUtil {
     @BindingAdapter("app:setItems")

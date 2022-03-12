@@ -10,4 +10,7 @@
     <string name="amount">Amount</string>
     <string name="converted_amount">Converted Amount</string>
     <string name="details">Details</string>
+    <string name="currency_converter_screen">Currency Converter</string>
+    <string name="historical_rates_screen">Historical Rates</string>
+    <string name="rate">Rate</string>
 </resources>

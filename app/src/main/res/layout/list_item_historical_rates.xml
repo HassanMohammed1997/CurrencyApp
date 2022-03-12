@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.hassanmohammed.currencyapp.domain.models.HistoricalRate" />
+
+        <variable
+            name="historicalRate"
+            type="HistoricalRate" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="2022-11-2"
+            android:text="@{historicalRate.date}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text='@{String.format("%,.2f", historicalRate.rate)}'
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="1.4567" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

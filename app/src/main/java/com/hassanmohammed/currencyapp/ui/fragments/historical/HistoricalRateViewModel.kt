@@ -1,13 +1,12 @@
 package com.hassanmohammed.currencyapp.ui.fragments.historical
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hassanmohammed.currencyapp.data.remote.Resource
 import com.hassanmohammed.currencyapp.domain.interactors.historical.GetHistoricalRatesIntercator
+import com.hassanmohammed.currencyapp.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,15 +16,38 @@ private const val TAG = "HistoricalRateViewModel"
 class HistoricalRateViewModel @Inject constructor(
     private val getHistoricalRatesIntercator: GetHistoricalRatesIntercator
 ) : ViewModel() {
+    private val _uiState: MutableStateFlow<HistoricalRatesUiState> =
+        MutableStateFlow(HistoricalRatesUiState())
+    val uiState: StateFlow<HistoricalRatesUiState> = _uiState
 
-    fun getHistoricalRates(date: String, base: String, symbol: String) = viewModelScope.launch {
-        getHistoricalRatesIntercator(date, base, symbol)
+    private val _uiEvent: MutableSharedFlow<UiEvent> = MutableSharedFlow()
+    val uiEvent: SharedFlow<UiEvent> = _uiEvent.asSharedFlow()
+
+    fun getHistoricalRates(base: String, symbol: String) = viewModelScope.launch {
+        getHistoricalRatesIntercator(base, symbol)
             .onEach { result ->
                 when (result) {
-                    is Resource.Loading -> Log.d(TAG, "getHistoricalRates: Loading...")
-                    is Resource.NetworkError -> Log.e(TAG, "getHistoricalRates: ${result.message}")
-                    is Resource.ServerError -> Log.e(TAG, "getHistoricalRates: ${result.message}")
-                    is Resource.Success -> Log.d(TAG, "getHistoricalRates: ${result.data}")
+                    is Resource.Loading -> {
+                        _uiState.value = uiState.value.copy(
+                            isLoading = true
+                        )
+                    }
+                    is Resource.NetworkError -> {
+                        _uiState.value = uiState.value.copy(
+                            isLoading = false
+                        )
+                        _uiEvent.emit(UiEvent.ShowSnackBar(result.message, result.messageRes))
+                    }
+                    is Resource.ServerError -> {
+                        _uiState.value = uiState.value.copy(
+                            isLoading = false
+                        )
+                        _uiEvent.emit(UiEvent.ShowSnackBar(result.message, result.messageRes))
+                    }
+                    is Resource.Success -> _uiState.value = uiState.value.copy(
+                        data = result.data,
+                        isLoading = false
+                    )
                 }
             }
             .launchIn(this)

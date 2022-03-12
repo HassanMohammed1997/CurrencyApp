@@ -7,7 +7,13 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 fun String?.orReturn(default: String = ""): String {
     return this ?: default
@@ -53,3 +59,22 @@ val Fragment.isNetworkAvailable: Boolean
         }
         return false
     }
+
+fun Fragment.startCollectOnStarted(func: suspend () -> Unit) {
+    viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            func()
+        }
+    }
+}
+
+fun Fragment.showSnackbar(message: String?) {
+    message?.let {
+        Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
+            .show()
+    }
+}
+
+fun Fragment.showSnackbar(@StringRes res: Int?) {
+    showSnackbar(res?.let { getString(it) })
+}

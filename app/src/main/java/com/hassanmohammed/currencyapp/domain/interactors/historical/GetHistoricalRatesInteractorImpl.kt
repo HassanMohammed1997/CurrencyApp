@@ -18,7 +18,6 @@ class GetHistoricalRatesInteractorImpl @Inject constructor(
     private val repository: MainRepository
 ) : GetHistoricalRatesIntercator {
     override fun invoke(
-        date: String,
         base: String,
         symbol: String
     ): Flow<Resource<List<HistoricalRate>>> = flow {

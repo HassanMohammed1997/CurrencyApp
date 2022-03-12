@@ -5,24 +5,23 @@ import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.hassanmohammed.currencyapp.R
 import com.hassanmohammed.currencyapp.databinding.FragmentCurrencyConverterBinding
+import com.hassanmohammed.currencyapp.utils.*
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.atIndex
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.setItems
-import com.hassanmohammed.currencyapp.utils.fragmentViewBinding
-import com.hassanmohammed.currencyapp.utils.getCountries
-import com.hassanmohammed.currencyapp.utils.getCurrency
-import com.hassanmohammed.currencyapp.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter) {
     private val binding by fragmentViewBinding(FragmentCurrencyConverterBinding::bind)
     private val viewModel by viewModels<CurrencyConvertViewModel>()
-    private var baseCurrency: String = ""
-    private var otherCurrency: String = ""
-    private var baseCurrencyIdx: Int = 0
-    private var otherCurrencyIdx: Int = 0
+    private var fromCurrencyCode: String = ""
+    private var toCurrencyCode: String = ""
+    private var fromCurrencyIdx: Int = 0
+    private var toCurrencyIdx: Int = 0
     private var amount: String = "1"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,23 +30,25 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
         binding.lifecycleOwner = viewLifecycleOwner
         setCountriesInSpinners()
         setListenerForViews()
+
+        //TODO Handle server error
     }
 
     private fun setListenerForViews() {
         binding.baseSelector.setOnItemClickListener { adapterView, view, position, l ->
-            baseCurrencyIdx = position
+            fromCurrencyIdx = position
         }
 
         binding.otherCurrencySelector.setOnItemClickListener { adapterView, view, position, l ->
-            otherCurrencyIdx = position
+            toCurrencyIdx = position
         }
 
         binding.baseSelector.doAfterTextChanged {
-            baseCurrency = getCurrency(it.toString())
+            fromCurrencyCode = getCurrency(it.toString())
         }
 
         binding.otherCurrencySelector.doAfterTextChanged {
-            otherCurrency = getCurrency(it.toString())
+            toCurrencyCode = getCurrency(it.toString())
         }
 
         binding.amountEt.doAfterTextChanged {
@@ -58,8 +59,10 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
 
         binding.convertBtn.setOnClickListener {
             hideKeyboard()
-            viewModel.convert(baseCurrency, otherCurrency, amount)
+            viewModel.convert(fromCurrencyCode, toCurrencyCode, amount)
         }
+
+        binding.detailsBtn.setOnClickListener { navigateToHistoricalRatesScreen() }
     }
 
     private fun setCountriesInSpinners() {
@@ -69,13 +72,22 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
 
     private fun swapSpinnersValues() {
         swapIndices()
-        binding.baseSelector.atIndex(baseCurrencyIdx)
-        binding.otherCurrencySelector.atIndex(otherCurrencyIdx)
+        binding.baseSelector.atIndex(fromCurrencyIdx)
+        binding.otherCurrencySelector.atIndex(toCurrencyIdx)
     }
 
     private fun swapIndices() {
-        val temp = baseCurrencyIdx
-        baseCurrencyIdx = otherCurrencyIdx
-        otherCurrencyIdx = temp
+        val temp = fromCurrencyIdx
+        fromCurrencyIdx = toCurrencyIdx
+        toCurrencyIdx = temp
+    }
+
+    private fun navigateToHistoricalRatesScreen() {
+        val action =
+            CurrencyConverterFragmentDirections.actionCurrencyConverterFragmentToHistoricalRatesFragment(
+                fromCurrencyCode,
+                toCurrencyCode
+            )
+        findNavController().navigate(action)
     }
 }
