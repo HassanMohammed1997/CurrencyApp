@@ -13,4 +13,5 @@
     <string name="currency_converter_screen">Currency Converter</string>
     <string name="historical_rates_screen">Historical Rates</string>
     <string name="rate">Rate</string>
+    <string name="historical_rate_format"><b>Historical rates</b> (%s, %s) | <b>3 days</b></string>
 </resources>

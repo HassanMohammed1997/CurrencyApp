@@ -1,7 +1,10 @@
 package com.hassanmohammed.currencyapp.utils
 
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 
@@ -22,5 +25,11 @@ object BindingAdapterUtil {
             val itemAtPosition = it.getItem(index) as String
             this.setText(itemAtPosition, false)
         }
+    }
+
+    @BindingAdapter("app:visibleGone")
+    @JvmStatic
+    fun View.visibleGone(gone: Boolean){
+        isGone = gone
     }
 }

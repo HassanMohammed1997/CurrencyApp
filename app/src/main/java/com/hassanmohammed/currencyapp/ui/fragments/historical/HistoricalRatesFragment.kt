@@ -29,6 +29,8 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.fromCurrency = args.fromCurrency
+        binding.toCurrency = args.toCurrency
         getHistoricalRates()
         setupHistoricalRatesRecycler()
         subscribeObservers()

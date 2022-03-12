@@ -5,21 +5,58 @@
 
     <data>
 
+        <variable
+            name="fromCurrency"
+            type="String" />
+
+        <variable
+            name="toCurrency"
+            type="String" />
+
+        <import type="com.hassanmohammed.currencyapp.ui.fragments.historical.HistoricalRateViewModel" />
+
+        <variable
+            name="viewModel"
+            type="HistoricalRateViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/historical_rates_list"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/historical_rate_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{@string/historical_rate_format(fromCurrency, toCurrency)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="Historical rates" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/historical_rates_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/historical_rate_title"
+            app:visibleGone="@{viewModel.uiState.loading}"
             tools:listitem="@layout/list_item_historical_rates" />
+
+        <ProgressBar
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:indeterminateTint="?colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibleGone="@{!viewModel.uiState.loading}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
