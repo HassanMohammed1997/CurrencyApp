@@ -32,4 +32,10 @@ object BindingAdapterUtil {
     fun View.visibleGone(gone: Boolean){
         isGone = gone
     }
+
+    @BindingAdapter("app:disable")
+    @JvmStatic
+    fun View.disable(disable: Boolean){
+        isEnabled = !disable
+    }
 }

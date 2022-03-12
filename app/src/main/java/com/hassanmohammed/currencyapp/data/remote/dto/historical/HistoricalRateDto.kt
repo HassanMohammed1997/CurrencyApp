@@ -10,7 +10,7 @@ data class HistoricalRateDto(
     val timestamp: Int? = 0,
     val base: String? = "",
     val rates: Map<String, Float>?,
-    val error: ErrorDto? = null
+    val error: FixerApiErrorDto? = null
 ) {
     fun toHistoricalRate() = HistoricalRate(date.orEmpty(), base.orEmpty(), rates?.values?.first(), error?.message)
 }

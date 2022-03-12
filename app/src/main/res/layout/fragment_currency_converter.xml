@@ -22,6 +22,16 @@
             android:layout_height="wrap_content"
             tools:context=".ui.fragments.currencyconverter.CurrencyConverterFragment">
 
+            <ProgressBar
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:indeterminateTint="?colorPrimary"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:visibleGone="@{!currencyViewModel.uiState.loading}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/convert_btn" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/base_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
@@ -37,10 +47,10 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/base_selector"
-                    android:freezesText="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
+                    android:freezesText="false"
                     android:inputType="none"
                     android:labelFor="@id/base_input_layout"
                     app:setDefaultIndex="@{0}" />
@@ -76,9 +86,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:inputType="none"
                     android:freezesText="false"
-                    app:setDefaultIndex="@{0}" />
+                    android:inputType="none"
+                    app:setDefaultIndex="@{1}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -103,6 +113,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/convert_btn"
                 android:layout_width="0dp"
+                app:disable="@{currencyViewModel.uiState.loading}"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:inputType="numberDecimal"

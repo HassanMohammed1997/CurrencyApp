@@ -1,6 +1,6 @@
 package com.hassanmohammed.currencyapp.data.remote.dto.historical
 
-data class ErrorDto(
+data class FixerApiErrorDto(
     val code: Int?,
     val type: String
 ) {

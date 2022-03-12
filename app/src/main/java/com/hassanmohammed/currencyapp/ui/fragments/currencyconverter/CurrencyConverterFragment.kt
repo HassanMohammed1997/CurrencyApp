@@ -8,12 +8,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hassanmohammed.currencyapp.R
 import com.hassanmohammed.currencyapp.databinding.FragmentCurrencyConverterBinding
+import com.hassanmohammed.currencyapp.utils.*
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.atIndex
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.setItems
-import com.hassanmohammed.currencyapp.utils.fragmentViewBinding
-import com.hassanmohammed.currencyapp.utils.getCountries
-import com.hassanmohammed.currencyapp.utils.getCurrency
-import com.hassanmohammed.currencyapp.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,11 +26,30 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.currencyViewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = this
         setCountriesInSpinners()
         setListenerForViews()
+        subscribeObserver()
 
-        //TODO Handle server error
+    }
+
+    private fun subscribeObserver() {
+        startCollectOnStarted {
+            viewModel.uiState.collect {
+                it.data?.let { currencyConverter ->
+                    if (currencyConverter.errorMessage.isNotEmpty())
+                        showSnackbar(currencyConverter.errorMessage)
+                }
+            }
+        }
+
+        startCollectOnStarted {
+            viewModel.uiEvent.collect {
+                when (it) {
+                    is UiEvent.ShowSnackBar -> showSnackbar(it.message)
+                }
+            }
+        }
     }
 
     private fun setListenerForViews() {
