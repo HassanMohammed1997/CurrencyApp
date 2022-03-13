@@ -18,8 +18,8 @@ data class CurrencyConverterDto(
 ) {
     fun toCurrencyConverter() =
         CurrencyConverter(
-            rates?.values?.first()?.currencyName.orEmpty(),
-            rates?.values?.first()?.rateForAmount?.toFloat() ?: 0f,
+            rates?.values?.firstOrNull()?.currencyName.orEmpty(),
+            rates?.values?.firstOrNull()?.rateForAmount?.toFloat() ?: 0f,
             error?.message.orEmpty()
         )
 }

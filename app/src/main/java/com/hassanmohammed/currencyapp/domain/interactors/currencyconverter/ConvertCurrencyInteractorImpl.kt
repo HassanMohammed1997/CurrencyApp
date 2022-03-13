@@ -14,6 +14,10 @@ class ConvertCurrencyInteractorImpl @Inject constructor(
         from: String,
         to: String,
         amount: String
-    ): Flow<Resource<CurrencyConverter>> =
-        safeApiCall { repository.convert(from, to, amount).toCurrencyConverter() }
+    ): Flow<Resource<CurrencyConverter>> {
+        var finalAmount = amount
+        if (finalAmount.isEmpty() || finalAmount == "0")
+            finalAmount = "1"
+        return safeApiCall { repository.convert(from, to, finalAmount).toCurrencyConverter() }
+    }
 }

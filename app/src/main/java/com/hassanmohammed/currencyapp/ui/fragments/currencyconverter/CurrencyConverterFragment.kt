@@ -111,7 +111,8 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
         val action =
             CurrencyConverterFragmentDirections.actionCurrencyConverterFragmentToHistoricalRatesFragment(
                 fromCurrencyCode,
-                toCurrencyCode
+                toCurrencyCode,
+                amount
             )
         findNavController().navigate(action)
     }

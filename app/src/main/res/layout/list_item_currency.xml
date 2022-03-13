@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.hassanmohammed.currencyapp.domain.models.CurrencyConverter" />
+
+        <variable
+            name="currencyConverter"
+            type="CurrencyConverter" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Currency name"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@{currencyConverter.currencyName}" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="1.5"
+            android:textColor="?colorPrimary"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:layout_weight="1"
+            android:text='@{String.format("%,.2f", currencyConverter.amount)}'/>
+
+    </LinearLayout>
+</layout>

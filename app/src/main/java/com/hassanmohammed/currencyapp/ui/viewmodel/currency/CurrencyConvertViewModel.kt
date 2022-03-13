@@ -3,6 +3,7 @@ package com.hassanmohammed.currencyapp.ui.viewmodel.currency
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hassanmohammed.currencyapp.data.remote.Resource
+import com.hassanmohammed.currencyapp.domain.interactors.currencyconverter.ConvertBaseCurrencyIntoMultipleCurrenciesInteractor
 import com.hassanmohammed.currencyapp.domain.interactors.currencyconverter.ConvertCurrencyInteractor
 import com.hassanmohammed.currencyapp.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,8 @@ private const val TAG = "CurrencyConvertViewMode"
 
 @HiltViewModel
 class CurrencyConvertViewModel @Inject constructor(
-    private val convertCurrencyInteractor: ConvertCurrencyInteractor
+    private val convertCurrencyInteractor: ConvertCurrencyInteractor,
+    private val convertBaseCurrencyIntoMultipleCurrenciesInteractor: ConvertBaseCurrencyIntoMultipleCurrenciesInteractor
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<CurrencyConverterUiState> =
@@ -49,6 +51,38 @@ class CurrencyConvertViewModel @Inject constructor(
                         _uiState.value = uiState.value.copy(
                             isLoading = false,
                             data = result.data
+                        )
+                    }
+                }
+
+            }.launchIn(this)
+    }
+
+    fun convert(base: String, amount: String, currencies: Array<String>) = viewModelScope.launch {
+        convertBaseCurrencyIntoMultipleCurrenciesInteractor(base, amount, currencies)
+            .onEach { result ->
+                when (result) {
+                    is Resource.Loading -> _uiState.value = uiState.value.copy(
+                        isLoading = true
+                    )
+                    is Resource.NetworkError -> {
+                        _uiState.value = uiState.value.copy(
+                            isLoading = false
+                        )
+
+                        _uiEvent.emit(UiEvent.ShowSnackBar(result.message, result.messageRes))
+                    }
+                    is Resource.ServerError -> {
+                        _uiState.value = uiState.value.copy(
+                            isLoading = false
+                        )
+
+                        _uiEvent.emit(UiEvent.ShowSnackBar(result.message, result.messageRes))
+                    }
+                    is Resource.Success -> {
+                        _uiState.value = uiState.value.copy(
+                            isLoading = false,
+                            currenciesRateConverters = result.data
                         )
                     }
                 }
