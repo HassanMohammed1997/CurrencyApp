@@ -1,4 +1,4 @@
-package com.hassanmohammed.currencyapp.ui.adapters
+package com.hassanmohammed.currencyapp.presentation.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.hassanmohammed.currencyapp.domain.models.HistoricalRate

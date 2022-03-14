@@ -60,7 +60,7 @@ val Fragment.isNetworkAvailable: Boolean
         return false
     }
 
-fun Fragment.startCollectOnStarted(func: suspend () -> Unit) {
+fun Fragment.collectFlowSafely(func: suspend () -> Unit) {
     viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             func()

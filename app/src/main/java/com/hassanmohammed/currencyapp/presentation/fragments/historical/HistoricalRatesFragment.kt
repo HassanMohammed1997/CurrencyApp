@@ -1,4 +1,4 @@
-package com.hassanmohammed.currencyapp.ui.fragments.historical
+package com.hassanmohammed.currencyapp.presentation.fragments.historical
 
 import android.os.Bundle
 import android.view.View
@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import com.hassanmohammed.currencyapp.R
 import com.hassanmohammed.currencyapp.databinding.FragmentHistoricalRatesBinding
-import com.hassanmohammed.currencyapp.ui.adapters.CurrenciesConversionRecyclerAdapter
-import com.hassanmohammed.currencyapp.ui.adapters.HistoricalRateRecyclerAdapter
-import com.hassanmohammed.currencyapp.ui.viewmodel.currency.CurrencyConvertViewModel
-import com.hassanmohammed.currencyapp.ui.viewmodel.historical.HistoricalRateViewModel
+import com.hassanmohammed.currencyapp.presentation.adapters.CurrenciesConversionRecyclerAdapter
+import com.hassanmohammed.currencyapp.presentation.adapters.HistoricalRateRecyclerAdapter
+import com.hassanmohammed.currencyapp.presentation.viewmodel.currency.CurrencyConvertViewModel
+import com.hassanmohammed.currencyapp.presentation.viewmodel.historical.HistoricalRateViewModel
 import com.hassanmohammed.currencyapp.utils.UiEvent
 import com.hassanmohammed.currencyapp.utils.fragmentViewBinding
 import com.hassanmohammed.currencyapp.utils.showSnackbar
-import com.hassanmohammed.currencyapp.utils.startCollectOnStarted
+import com.hassanmohammed.currencyapp.utils.collectFlowSafely
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
     }
 
     private fun subscribeObservers() {
-        startCollectOnStarted {
+        collectFlowSafely {
             viewModel.uiState.collect { result ->
                 result.data?.let {
                     binding.historicalRatesList.isVisible = it.isNotEmpty()
@@ -66,7 +66,7 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
             }
         }
 
-        startCollectOnStarted {
+        collectFlowSafely {
             viewModel.uiEvent.collect {
                 when (it) {
                     is UiEvent.ShowSnackBar -> showSnackbar(it.message)
@@ -74,7 +74,7 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
             }
         }
 
-        startCollectOnStarted {
+        collectFlowSafely {
             currencyConverterViewModel.uiState.collect {
                 it.currenciesRateConverters?.let { rates ->
                     if (rates.isNotEmpty())

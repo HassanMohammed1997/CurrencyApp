@@ -1,4 +1,4 @@
-package com.hassanmohammed.currencyapp.ui.viewmodel.currency
+package com.hassanmohammed.currencyapp.presentation.viewmodel.currency
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

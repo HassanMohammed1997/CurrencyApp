@@ -1,4 +1,4 @@
-package com.hassanmohammed.currencyapp.ui.fragments.currencyconverter
+package com.hassanmohammed.currencyapp.presentation.fragments.currencyconverter
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hassanmohammed.currencyapp.R
 import com.hassanmohammed.currencyapp.databinding.FragmentCurrencyConverterBinding
-import com.hassanmohammed.currencyapp.ui.viewmodel.currency.CurrencyConvertViewModel
+import com.hassanmohammed.currencyapp.presentation.viewmodel.currency.CurrencyConvertViewModel
 import com.hassanmohammed.currencyapp.utils.*
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.atIndex
 import com.hassanmohammed.currencyapp.utils.BindingAdapterUtil.setItems
@@ -41,7 +41,7 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
     }
 
     private fun subscribeObserver() {
-        startCollectOnStarted {
+        collectFlowSafely {
             viewModel.uiState.collect {
                 it.data?.let { currencyConverter ->
                     if (currencyConverter.errorMessage.isNotEmpty())
@@ -50,7 +50,7 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
             }
         }
 
-        startCollectOnStarted {
+        collectFlowSafely {
             viewModel.uiEvent.collect {
                 when (it) {
                     is UiEvent.ShowSnackBar -> showSnackbar(it.message)

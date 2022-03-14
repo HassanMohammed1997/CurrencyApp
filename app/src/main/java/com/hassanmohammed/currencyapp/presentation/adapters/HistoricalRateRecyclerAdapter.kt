@@ -1,4 +1,4 @@
-package com.hassanmohammed.currencyapp.ui.adapters
+package com.hassanmohammed.currencyapp.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

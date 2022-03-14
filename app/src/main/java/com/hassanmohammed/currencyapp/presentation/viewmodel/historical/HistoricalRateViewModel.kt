@@ -1,4 +1,4 @@
-package com.hassanmohammed.currencyapp.ui.viewmodel.historical
+package com.hassanmohammed.currencyapp.presentation.viewmodel.historical
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

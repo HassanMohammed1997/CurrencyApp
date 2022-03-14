@@ -13,11 +13,11 @@
             name="toCurrency"
             type="String" />
 
-        <import type="com.hassanmohammed.currencyapp.ui.viewmodel.historical.HistoricalRateViewModel" />
+        <import type="com.hassanmohammed.currencyapp.presentation.viewmodel.historical.HistoricalRateViewModel" />
 
         <variable
             name="viewModel"
-            type="com.hassanmohammed.currencyapp.ui.viewmodel.historical.HistoricalRateViewModel" />
+            type="com.hassanmohammed.currencyapp.presentation.viewmodel.historical.HistoricalRateViewModel" />
 
     </data>
 

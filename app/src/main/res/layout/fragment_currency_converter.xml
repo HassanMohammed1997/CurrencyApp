@@ -9,7 +9,7 @@
 
         <variable
             name="currencyViewModel"
-            type="com.hassanmohammed.currencyapp.ui.viewmodel.currency.CurrencyConvertViewModel" />
+            type="com.hassanmohammed.currencyapp.presentation.viewmodel.currency.CurrencyConvertViewModel" />
     </data>
 
     <ScrollView
@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.fragments.currencyconverter.CurrencyConverterFragment">
+            tools:context=".presentation.fragments.currencyconverter.CurrencyConverterFragment">
 
             <ProgressBar
                 android:layout_width="20dp"

@@ -1,4 +1,4 @@
-package com.hassanmohammed.currencyapp.ui
+package com.hassanmohammed.currencyapp.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
