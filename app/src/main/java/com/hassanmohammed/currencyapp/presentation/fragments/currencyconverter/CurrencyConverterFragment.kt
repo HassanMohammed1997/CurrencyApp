@@ -84,10 +84,18 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
 
         binding.convertBtn.setOnClickListener {
             hideKeyboard()
-            viewModel.convert(fromCurrencyCode, toCurrencyCode, amount)
+            convertCurrency()
         }
 
         binding.detailsBtn.setOnClickListener { navigateToHistoricalRatesScreen() }
+    }
+
+    private fun convertCurrency() {
+        if (isNetworkAvailable) {
+            showSnackbar(R.string.no_internet_connection)
+            return
+        }
+        viewModel.convert(fromCurrencyCode, toCurrencyCode, amount)
     }
 
     private fun setCountriesInSpinners() {

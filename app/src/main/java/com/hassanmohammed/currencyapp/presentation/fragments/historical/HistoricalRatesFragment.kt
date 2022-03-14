@@ -14,10 +14,7 @@ import com.hassanmohammed.currencyapp.presentation.adapters.CurrenciesConversion
 import com.hassanmohammed.currencyapp.presentation.adapters.HistoricalRateRecyclerAdapter
 import com.hassanmohammed.currencyapp.presentation.viewmodel.currency.CurrencyConvertViewModel
 import com.hassanmohammed.currencyapp.presentation.viewmodel.historical.HistoricalRateViewModel
-import com.hassanmohammed.currencyapp.utils.UiEvent
-import com.hassanmohammed.currencyapp.utils.fragmentViewBinding
-import com.hassanmohammed.currencyapp.utils.showSnackbar
-import com.hassanmohammed.currencyapp.utils.collectFlowSafely
+import com.hassanmohammed.currencyapp.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -111,6 +108,10 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
     }
 
     private fun convertBaseCurrencyInto10PopularCurrencies() {
+        if (isNetworkAvailable) {
+            showSnackbar(R.string.no_internet_connection)
+            return
+        }
         currencyConverterViewModel.convert(
             args.fromCurrency,
             args.amount,

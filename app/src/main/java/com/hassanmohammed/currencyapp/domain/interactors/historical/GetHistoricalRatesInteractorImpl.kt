@@ -4,7 +4,6 @@ import com.hassanmohammed.currencyapp.data.MainRepository
 import com.hassanmohammed.currencyapp.data.remote.Resource
 import com.hassanmohammed.currencyapp.domain.models.HistoricalRate
 import com.hassanmohammed.currencyapp.utils.fromNowPast
-import com.hassanmohammed.currencyapp.utils.now
 import com.hassanmohammed.currencyapp.utils.toFormattedDate
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -19,19 +18,19 @@ class GetHistoricalRatesInteractorImpl @Inject constructor(
 ) : GetHistoricalRatesIntercator {
     override fun invoke(
         base: String,
-        symbol: String
+        otherCurrency: String
     ): Flow<Resource<List<HistoricalRate>>> = flow {
         emit(Resource.Loading())
         try {
             coroutineScope {
                 val historicalDay1 =
-                    async { repository.getHistoricalRates(1.fromNowPast.toFormattedDate(), base, symbol) }
+                    async { repository.getHistoricalRates(1.fromNowPast.toFormattedDate(), base, otherCurrency) }
                 val historicalDay2 =
                     async {
                         repository.getHistoricalRates(
                             (2.fromNowPast.toFormattedDate()),
                             base,
-                            symbol
+                            otherCurrency
                         )
                     }
                 val historicalDay3 =
@@ -39,7 +38,7 @@ class GetHistoricalRatesInteractorImpl @Inject constructor(
                         repository.getHistoricalRates(
                             3.fromNowPast.toFormattedDate(),
                             base,
-                            symbol
+                            otherCurrency
                         )
                     }
                 val allHistoricalRates = mutableListOf<HistoricalRate>()
