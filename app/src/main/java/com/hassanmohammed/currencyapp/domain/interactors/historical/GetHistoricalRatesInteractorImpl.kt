@@ -25,11 +25,11 @@ class GetHistoricalRatesInteractorImpl @Inject constructor(
         try {
             coroutineScope {
                 val historicalDay1 =
-                    async { repository.getHistoricalRates(now().toFormattedDate(), base, symbol) }
+                    async { repository.getHistoricalRates(1.fromNowPast.toFormattedDate(), base, symbol) }
                 val historicalDay2 =
                     async {
                         repository.getHistoricalRates(
-                            (1.fromNowPast.toFormattedDate()),
+                            (2.fromNowPast.toFormattedDate()),
                             base,
                             symbol
                         )
@@ -37,7 +37,7 @@ class GetHistoricalRatesInteractorImpl @Inject constructor(
                 val historicalDay3 =
                     async {
                         repository.getHistoricalRates(
-                            2.fromNowPast.toFormattedDate(),
+                            3.fromNowPast.toFormattedDate(),
                             base,
                             symbol
                         )

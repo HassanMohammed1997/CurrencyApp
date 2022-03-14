@@ -59,7 +59,7 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
                 result.data?.let {
                     if (it.isNotEmpty()) {
                         historicalRateRecyclerAdapter.submitList(it)
-                        showSnackbar(it.first().errorMessage)
+                        binding.historicalErrorMsg.text = it.first().errorMessage
                     } else {
                         binding.historicalRatesList.isVisible = false
                     }
@@ -115,7 +115,7 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
         currencyConverterViewModel.convert(
             args.fromCurrency,
             args.amount,
-            arrayOf("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "ZAR")
+            arrayOf("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "ZAR", "SVC", "BOB", "HUF")
         )
     }
 
