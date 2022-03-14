@@ -57,11 +57,10 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
         startCollectOnStarted {
             viewModel.uiState.collect { result ->
                 result.data?.let {
+                    binding.historicalRatesList.isVisible = it.isNotEmpty()
                     if (it.isNotEmpty()) {
                         historicalRateRecyclerAdapter.submitList(it)
                         binding.historicalErrorMsg.text = it.first().errorMessage
-                    } else {
-                        binding.historicalRatesList.isVisible = false
                     }
                 }
             }
