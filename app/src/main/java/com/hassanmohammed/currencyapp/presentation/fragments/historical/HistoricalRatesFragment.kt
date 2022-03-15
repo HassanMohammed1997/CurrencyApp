@@ -108,7 +108,7 @@ class HistoricalRatesFragment : Fragment(R.layout.fragment_historical_rates) {
     }
 
     private fun convertBaseCurrencyInto10PopularCurrencies() {
-        if (isNetworkAvailable) {
+        if (!isNetworkAvailable) {
             showSnackbar(R.string.no_internet_connection)
             return
         }
