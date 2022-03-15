@@ -91,7 +91,7 @@ class CurrencyConverterFragment : Fragment(R.layout.fragment_currency_converter)
     }
 
     private fun convertCurrency() {
-        if (isNetworkAvailable) {
+        if (!isNetworkAvailable) {
             showSnackbar(R.string.no_internet_connection)
             return
         }
